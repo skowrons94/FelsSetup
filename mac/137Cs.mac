@@ -1,0 +1,20 @@
+########################################
+#
+/myDetector/event/printModulo 100000
+/gps/number 1
+/gps/pos/type Point
+/gps/ang/type iso
+/gps/ene/type Mono
+
+#/gps/pos/centre 0 -27.376 19.169 mm #v3
+
+/gps/ene/mono 0 MeV
+
+#/grdm/noVolumes
+#/grdm/selectVolume Source_Disk
+/gps/particle ion
+/gps/ion	55  137
+#/run/beamOn 7785745 #v5
+#/run/beamOn 11280373 #10869806	#v4
+#/run/beamOn 3359457         #v3
+/run/beamOn 50000000  #v2

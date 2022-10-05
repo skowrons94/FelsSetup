@@ -1,0 +1,780 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+    <define>
+	<rotation name="RotateYPipe" y="-90" unit="deg"/>
+	<rotation name="RotateY180" y="-180" unit="deg"/>
+	<rotation name="smalltubeTilt" y="35.5" unit="deg"/>
+	<rotation name="smallEndcapTilt" y="-35.5" unit="deg"/>
+	<rotation name="invers_smalltubeTilt" y="-35.5" unit="deg"/>
+
+    <position name="CopperPipe" unit="mm" x="0" y="0" z="8.6763+1.875-0.17" />
+	<position name="tube_copper" unit="mm" x="0." y="0." z="-56.5-45.76+1.875-0.17" />
+
+	<!-- positions of the colling block, target holder and colling water-->
+	<position name="Targetholder" untit="mm" x="0." y="0." z="1.5" />
+	<position name="cooling_block_position" unit="mm" x="0" y="0" z="-45.76+49.6+8.6763+1.875-0.17"/>
+	<position name="cooling_water_pos" unit="mm" x="0" y="0" z="-45.76+49.6+8.6763+1.875-0.17"/>
+	<!-- positions needed for building the things above -->
+	<position name="cooling_block_internal_pos" unit="mm" x="0" y="0" z="39.6"/>
+	<position name="cooling_block_back_pos" unit="mm" x="0" y="0" z="77.1"/>
+	<position name="cooling_block_cut_pos" unit="mm" x="0" y="0" z="-8.855-0.17"/>
+	<position name="innertargetHolderfront" untit="mm" x="0." y="0." z="-1.605+0.34" />
+	<position name="innertargetHoldermiddle" untit="mm" x="0." y="0." z="0.68" />
+	<position name="innertargetHolderback" untit="mm" x="0." y="0." z="+1.875+0.34" />
+	<position name="selfTargetholder" untit="mm" x="0." y="0." z="-0.51" />
+	<position name="Targetpos" untit="mm" x="0." y="0." z="0.0" />
+	<!-- positions for building TargetChamber-->
+	<position name="smallTubePos" unit="mm" x="-0.580703*59.35" y="0." z="-0.81411552*59.35+45.76-1.875+0.17" />
+	<position name="invers_smallTubePos" unit="mm" x="0.81411552*59.35-8.7" y="0." z="0.81411552*59.35-45.76+1.875-0.17" />
+	<position name="leftEndFlanshPos" unit="mm" x="0." y="0." z="-0.5*(278+27.75)" />
+	<position name="rightEndFlanshPos" unit="mm" x="0." y="0." z="0.5*(278+27.75)" />
+	<position name="smallTubeFlanshPos" unit="mm" x="-0.580703*(118.7+0.5*16.3)" y="0." z="-0.81411552*(118.7+0.5*16.3)+45.76-1.875+0.17" />
+	<position name="centered" unit="mm" x="0." y="0." z="0." />
+	<!-- positions for the world volume-->
+	<position name="YPipe" unit="mm" x="0" y="0" z="-45.76+1.875-0.17" />
+	<position name="endFlunsh1" unit="mm" x="0." y="0." z="0.5*(278+27.8)-45.76+1.875-0.17"/>
+	<position name="endFlunsh2" unit="mm" x="0." y="0." z="-0.5*(278+27.8)-45.76+1.875-0.17"/>
+	<!--position name="coppertube" unit="mm" x="0." y="0." z="144.-45.76"/-->
+	<position name="smalltube" unit="mm" x="-0.580703*67.5" y="0." z="-0.81411552*67.5"/>
+	<!-- position of the endcap of the small tube -->
+	<position name="small_Tube_endcap" unit="mm" x="-0.580703*(118.7+16.3-3)" y="0." z="-0.81411552*(118.7+16.3-3)" />
+    </define>
+
+    <materials>
+        <!--          -->
+        <!-- elements -->
+        <!--          -->
+        <!-- http://www-cdf.fnal.gov/~kirby/lbne_geo_tests/lbne_10kT_Materials.gdml -->
+        <element name="videRef"    formula="VACUUM" Z="1"> <atom value="1."/>       </element>
+        <element name="hydrogen"   formula="H"   Z="1">    <atom value="1.0079"/>   </element>
+        <element name="carbon"     formula="C"   Z="6">    <atom value="12.0107"/>  </element>
+        <element name="nitrogen"   formula="N"   Z="7">    <atom value="14.0067"/>  </element>
+        <element name="oxygen"     formula="O"   Z="8">    <atom value="15.999"/>   </element>
+        <element name="sodium"     formula="Na"  Z="11">   <atom value="22.99"/>    </element>
+        <element name="magnesium"  formula="Mg"  Z="12">   <atom value="24.305"/>   </element>
+        <element name="aluminum"   formula="Al"  Z="13">   <atom value="26.9815"/>  </element>
+        <element name="silicon"    formula="Si"  Z="14">   <atom value="28.0855"/>  </element>
+        <element name="phosphorus" formula="P"   Z="15">   <atom value="30.973"/>   </element>
+        <element name="sulphur"    formula="S"   Z="16">   <atom value="32.065"/>   </element>
+        <element name="argon"      formula="Ar"  Z="18">   <atom value="39.9480"/>  </element>
+        <element name="calcium"    formula="Ca"  Z="20">   <atom value="40.078"/>   </element>
+        <element name="titanium"   formula="Ti"  Z="22">   <atom value="47.867"/>   </element>
+        <element name="chromium"   formula="Cr"  Z="24">   <atom value="51.9961"/>  </element>
+        <element name="iron"       formula="Fe"  Z="26">   <atom value="55.8450"/>  </element>
+        <element name="nickel"     formula="Ni"  Z="28">   <atom value="58.6934"/>  </element>
+        <element name="copper"     formula="Cu"  Z="29">   <atom value="63.55"/>    </element>
+        <element name="germanium"  formula="Ge"  Z="32">   <atom value="72.63"/>    </element>
+        <element name="bromine"    formula="Br"  Z="35">   <atom value="79.904"/>   </element>
+        <element name="palladium"  formula="Pd"  Z="46">   <atom value="106.42"/>   </element>
+        <element name="tin"        formula="Sn"  Z="50">   <atom value="118.71"/>   </element>
+        <element name="platinum"   formula="Pt"  Z="78">   <atom value="195.084"/>  </element>
+        <element name="gold"       formula="Au"  Z="79">   <atom value="196.97"/>   </element>
+        <element name="tungsten"   formula="W"   Z="74">   <atom value="183.84"/>   </element>
+        <element name="bismuth"    formula="Bi"  Z="83">   <atom value="208.980"/>  </element>
+		<element name="tantal"    formula="Ta"  Z="73">   <atom value="180.947"/>  </element>
+
+        <!--                    -->
+    <!-- composite elements -->
+        <!--                    -->
+
+        <isotope name="B10"  N="10" Z="5">   <atom unit="g/mole" value="10.0129369"/>  </isotope>
+        <isotope name="B11"  N="11" Z="5">   <atom unit="g/mole" value="11.0093054"/>  </isotope>
+        <element name="B">
+            <fraction n="0.199" ref="B10"/>
+            <fraction n="0.801" ref="B11"/>
+        </element>
+    	<isotope name="Pb206"  N="206" Z="82">   <atom unit="g/mole" value="205.9744651"/>  </isotope>
+    	<isotope name="Pb207"  N="207" Z="82">   <atom unit="g/mole" value="206.9758967"/>  </isotope>
+    	<isotope name="Pb208"  N="208" Z="82">   <atom unit="g/mole" value="207.9766519"/>  </isotope>
+    	<element name="lead" formula="Pb">
+        	<fraction n="0.241" ref="Pb206"/>
+        	<fraction n="0.221" ref="Pb207"/>
+        	<fraction n="0.524" ref="Pb208"/>
+    	</element> 
+    	<material name="leadMaterial" state="solid">
+      		<D value="11.35" unit="g/cm3"/>
+      		<composite n="1" ref="lead" />
+    	</material>  
+        <isotope name="Ag107"  N="107" Z="47">   <atom value="106.905092"/>   </isotope>
+        <isotope name="Ag109"  N="109" Z="47">   <atom value="108.904756"/>   </isotope>
+        <element name="silver">
+                <!-- https://www.webelements.com/silver/isotopes.html -->
+                <fraction n="0.51839" ref="Ag107"/>
+                <fraction n="0.48161" ref="Ag109"/>
+        </element>
+
+        <isotope name="Cd106Cd" N="106" Z="48"> <atom unit="g/mole" value="105.906461"/>  </isotope>
+        <isotope name="Cd108Cd" N="108" Z="48"> <atom unit="g/mole" value="107.904176"/>  </isotope>
+        <isotope name="Cd110Cd" N="110" Z="48"> <atom unit="g/mole" value="109.903005"/>  </isotope>
+        <isotope name="Cd111Cd" N="111" Z="48"> <atom unit="g/mole" value="110.904182"/>  </isotope>
+        <isotope name="Cd112Cd" N="112" Z="48"> <atom unit="g/mole" value="111.902757"/>  </isotope>
+        <isotope name="Cd113Cd" N="113" Z="48"> <atom unit="g/mole" value="112.904400"/>  </isotope>
+        <isotope name="Cd114Cd" N="114" Z="48"> <atom unit="g/mole" value="113.903357"/>  </isotope>
+        <isotope name="Cd116Cd" N="116" Z="48"> <atom unit="g/mole" value="115.904755"/>  </isotope>
+        <element name="cadmium">
+                <!-- isotopes taken in the natural abundance -->
+                <!-- taken from https://www.webelements.com/cadmium/isotopes.html -->
+                <fraction ref="Cd106Cd" n="0.0125"/>
+                <fraction ref="Cd108Cd" n="0.0089"/>
+                <fraction ref="Cd110Cd" n="0.1249"/>
+                <fraction ref="Cd111Cd" n="0.1280"/>
+                <fraction ref="Cd112Cd" n="0.2413"/>
+                <fraction ref="Cd113Cd" n="0.1222"/>
+                <fraction ref="Cd114Cd" n="0.2873"/>
+                <fraction ref="Cd116Cd" n="0.0749"/>
+        </element>
+
+        <isotope name="Te120Te" N="120" Z="52"> <atom unit="g/mole" value="119.904048"/>  </isotope>
+        <isotope name="Te122Te" N="122" Z="52"> <atom unit="g/mole" value="121.903050"/>  </isotope>
+        <isotope name="Te123Te" N="123" Z="52"> <atom unit="g/mole" value="122.9042710"/>  </isotope>
+        <isotope name="Te124Te" N="124" Z="52"> <atom unit="g/mole" value="123.9028180"/>  </isotope>
+        <isotope name="Te125Te" N="125" Z="52"> <atom unit="g/mole" value="124.9044285"/>  </isotope>
+        <isotope name="Te126Te" N="126" Z="52"> <atom unit="g/mole" value="125.9033095"/>  </isotope>
+        <isotope name="Te128Te" N="128" Z="52"> <atom unit="g/mole" value="127.904463"/>  </isotope>
+        <isotope name="Te130Te" N="130" Z="52"> <atom unit="g/mole" value="129.906229"/>  </isotope>
+        <element name="tellurium">
+                <!-- see https://www.webelements.com/tellurium/isotopes.html -->
+                <fraction ref="Te120Te" n="0.0009"/>
+                <fraction ref="Te122Te" n="0.0255"/>
+                <fraction ref="Te123Te" n="0.0089"/>
+                <fraction ref="Te124Te" n="0.0474"/>
+                <fraction ref="Te125Te" n="0.0707"/>
+                <fraction ref="Te126Te" n="0.1884"/>
+                <fraction ref="Te128Te" n="0.3174"/>
+                <fraction ref="Te130Te" n="0.3408"/>
+        </element>
+
+
+    
+        <!--          -->
+        <!-- vacuum   -->
+        <!--          -->
+        <material formula=" " name="Vacuum">
+            <D value="1.e-25" unit="g/cm3" />
+            <fraction n="1.0" ref="videRef" />
+        </material>
+
+
+
+        <!--           -->
+    <!-- materials -->
+        <!--           -->
+
+        <!-- FR4 submaterials -->
+
+        <material name="EpoxyResin" formula="C38H40O6Br4">
+            <D value="1.1250" unit="g/cm3"/>
+            <composite n="38" ref="carbon"/>
+            <composite n="40" ref="hydrogen"/>
+            <composite n="6" ref="oxygen"/>
+            <composite n="4" ref="bromine"/>
+        </material>
+
+        <material name="SiO2" formula="SiO2">
+            <D value="2.2" unit="g/cm3"/>
+            <composite n="1" ref="silicon"/>
+            <composite n="2" ref="oxygen"/>
+        </material>
+
+        <material name="Al2O3" formula="Al2O3">
+            <D value="3.97" unit="g/cm3"/>
+            <composite n="2" ref="aluminum"/>
+            <composite n="3" ref="oxygen"/>
+        </material>
+
+        <material name="Fe2O3" formula="Fe2O3">
+            <D value="5.24" unit="g/cm3"/>
+            <composite n="2" ref="iron"/>
+            <composite n="3" ref="oxygen"/>
+        </material>
+
+       <material name="CaO" formula="CaO">
+           <D value="3.35" unit="g/cm3"/>
+           <composite n="1" ref="calcium"/>
+           <composite n="1" ref="oxygen"/>
+       </material>
+
+       <material name="MgO" formula="MgO">
+           <D value="3.58" unit="g/cm3"/>
+           <composite n="1" ref="magnesium"/>
+           <composite n="1" ref="oxygen"/>
+       </material>
+
+       <material name="Na2O" formula="Na2O">
+           <D value="2.27" unit="g/cm3"/>
+           <composite n="2" ref="sodium"/>
+           <composite n="1" ref="oxygen"/>
+       </material>
+
+       <material name="TiO2" formula="TiO2">
+           <D value="4.23" unit="g/cm3"/>
+           <composite n="1" ref="titanium"/>
+           <composite n="2" ref="oxygen"/>
+       </material>
+
+       <material name="FibrousGlass">
+           <D value="2.74351" unit="g/cm3"/>
+           <fraction n="0.600" ref="SiO2"/>
+           <fraction n="0.118" ref="Al2O3"/>
+           <fraction n="0.001" ref="Fe2O3"/>
+           <fraction n="0.224" ref="CaO"/>
+           <fraction n="0.034" ref="MgO"/>
+           <fraction n="0.010" ref="Na2O"/>
+           <fraction n="0.013" ref="TiO2"/>
+       </material>
+
+       <material name="FR4">
+           <D value="1.98281" unit="g/cm3"/>
+           <fraction n="0.47" ref="EpoxyResin"/>
+           <fraction n="0.53" ref="FibrousGlass"/>
+       </material>  
+  
+ 
+       <!-- Glue (DC3140, Dow Corning) sub materials -->
+   
+       <material name="dimethylsiloxane_hydroxy_terminated" formula="HOSiCH3CH3OH">
+           <D value="0.98" unit="g/cm3"/>
+           <composite n="2" ref="oxygen"/>
+           <composite n="8" ref="hydrogen"/>
+           <composite n="2" ref="carbon"/>
+           <composite n="1" ref="silicon"/>
+       </material>  
+   
+       <material name="trimethylated_silica" formula="O2Si">
+           <D value="2.6" unit="g/cm3"/>
+           <composite n="2" ref="oxygen"/>    
+           <composite n="1" ref="silicon"/>
+       </material>  
+   
+       <material name="methyltrimethoxysilane" formula="C4H12O3Si">
+           <D value="0.955" unit="g/cm3"/>
+           <composite n="3"  ref="oxygen"/>
+           <composite n="12" ref="hydrogen"/>
+           <composite n="4"  ref="carbon"/>
+           <composite n="1"  ref="silicon"/>
+       </material>
+   
+       <material name="DC3140">
+           <D value="1.2" unit="g/cm3"/>
+           <fraction n="0.60" ref="dimethylsiloxane_hydroxy_terminated"/>
+           <fraction n="0.30" ref="trimethylated_silica"/>
+           <fraction n="0.10" ref="methyltrimethoxysilane"/>    
+       </material>  
+   
+
+      <!-- Conductive materials for PCB -->
+   
+      <material name="Copper" state="solid">
+           <D value="8.960" unit="g/cm3"/>
+           <fraction n="1." ref="copper"/>
+      </material>
+   
+     <material name="Gold" state="solid">
+           <D value="19.32" unit="g/cm3"/>
+           <fraction n="1." ref="gold"/>
+     </material>
+   
+   
+     <material name="Nickel" state="solid">
+           <D value="8.96" unit="g/cm3"/>
+           <fraction n="1." ref="nickel"/>
+     </material>
+
+     <material name="Titanium" state="solid">
+           <!--http://www.rsc.org/periodic-table/element/22/titanium -->
+           <D value="4.506" unit="g/cm3"/>
+           <fraction n="1." ref="titanium"/>
+     </material>
+
+
+     <material name="Silver" state="solid">
+           <!-- see https://en.wikipedia.org/wiki/Silver -->
+           <D value="10.49" unit="g/cm3"/>
+           <fraction n="1." ref="silver"/>
+     </material>
+
+     <material name="Cadmium" state="solid">
+           <!-- see https://www.lenntech.com/periodic/elements/cd.htm -->
+           <D value="8.7" unit="g/cm3"/>
+           <fraction n="1." ref="cadmium"/>
+     </material>
+
+     <material name="Palladium" state="solid">
+           <!-- see http://www.rsc.org/periodic-table/element/46/palladium -->
+           <D value="12.0" unit="g/cm3"/>
+           <fraction n="1." ref="palladium"/>
+     </material>
+
+     <material name="Tin" state="solid">
+           <!-- see http://www.rsc.org/periodic-table/element/50/tin -->
+           <D value="7.287" unit="g/cm3"/>
+           <fraction n="1." ref="tin"/>
+     </material>
+
+     <material name="Tellurium" state="solid">
+           <!-- see http://www.rsc.org/periodic-table/element/52/tellurium -->
+           <D value="6.232" unit="g/cm3"/>
+           <fraction n="1." ref="tellurium"/>
+     </material>
+
+     <material name="Platinum" state="solid">
+           <!-- see http://www.rsc.org/periodic-table/element/78/platinum -->
+           <D value="21.5" unit="g/cm3"/>
+           <fraction n="1." ref="platinum"/>
+     </material>
+
+
+     <!-- Passivation -->
+
+     <material name="AlNO" state="solid" formula="AlNO">
+           <!-- Aluminum oxynitride -->
+           <!-- see https://en.wikipedia.org/wiki/Aluminium_oxynitride -->
+           <!-- see https://webbook.nist.gov/cgi/formula?ID=B1000046&Mask=800 -->
+           <D value="3.6935" unit="g/cm3"/>
+           <composite n="1" ref="aluminum"/>
+           <composite n="1" ref="nitrogen"/>
+           <composite n="1" ref="oxygen"/>
+     </material>
+
+     <!-- Bonding -->
+
+     <material name="SAC305" state="solid">
+           <!-- see https://www.aimsolder.com/sites/default/files/alloy_sac305_tds.pdf -->
+           <!-- see https://cdn.sos.sk/productdata/73/d6/578230e0/sac305-sn96-5ag3cu0-5-0-7mm-1kg.pdf -->
+           <D value="7.37" unit="g/cm3"/>
+           <fraction n="0.965" ref="Tin"/>
+           <fraction n="0.030" ref="Silver"/>
+           <fraction n="0.005" ref="Copper"/>
+     </material>
+
+
+   
+   
+     <!-- Kapton -->
+   
+     <material name="Kapton" state="solid">
+           <D value="1.42" unit="g/cm3"/>
+           <fraction n="0.0273" ref="hydrogen"/>
+           <fraction n="0.7213" ref="carbon"/>
+           <fraction n="0.0765" ref="nitrogen"/>
+           <fraction n="0.1749" ref="oxygen"/>
+     </material>
+   
+
+
+      <!-- Aluminum, Hineycomb, Carbon fibre, etc. (simple materials) -->
+
+      <material formula="Al" name="Aluminum" state="solid">
+           <D value="2.700" unit="g/cm3"/>
+           <fraction n="1." ref="aluminum"/>
+      </material>
+        
+      <material name="CarbonFibre" state="solid">      
+           <D unit="g/cm3" value="0.145"/>
+           <fraction n="1.0" ref="carbon"/>      
+      </material>     
+
+      <material name="Honeycomb" state="solid">
+           <D value="0.030" unit="g/cm3"/>
+           <fraction n="1." ref="aluminum"/>
+      </material>
+
+      <!-- Silicon -->
+      <material name="Silicon" state="solid">
+           <D value="2.333" unit="g/cm3"/>
+           <fraction n="1." ref="silicon"/>
+      </material>
+
+      <!-- Tungsten -->
+      <material name="Tungsten" state="solid">
+          <D value="19.3" unit="g/cm3"/>
+          <fraction n="1." ref="tungsten"/>
+      </material> 
+
+     <!-- Cadmium Telluride -->
+     <material name="CdTe" state="solid">
+           <!--https://www.azom.com/article.aspx?ArticleID=8408-->
+           <D value="5.85" unit="g/cm3"/>
+           <composite n="1" ref="cadmium"/>
+           <composite n="1" ref="tellurium"/>
+     </material>
+
+      <!-- PMT -->
+      <!--sylgard 170, Silicon Rubber Polydimethylsiloxane(PDMS)-->
+      <material name="PDMS" formula="SiOC2H6" >
+          <D value="1.34" unit="g/cm3" />
+          <composite n="1" ref="silicon" />
+          <composite n="1" ref="oxygen" />
+          <composite n="2" ref="carbon" />
+          <composite n="6" ref="hydrogen" />
+      </material>
+
+      <material name="Glass" formula="SiO2" >
+          <D value="2.5" unit="g/cm3" />
+          <composite n="1" ref="silicon" />
+          <composite n="2" ref="oxygen" />
+      </material>
+
+	  <material name="Water" formula="H20" >
+          <D value="1.0" unit="g/cm3" />
+          <composite n="2" ref="hydrogen" />
+          <composite n="1" ref="oxygen" />
+      </material>
+
+      <material name="PMT" state="solid">
+         <D value="2.524" unit="g/cm3"/>
+         <fraction n="0.7" ref="aluminum"/>
+         <fraction n="0.2" ref="Glass"/>
+         <fraction n="0.1" ref="PDMS"/>
+      </material>
+
+      <!-- BGO -->
+      <material name="BGO" formula="Bi4Ge3O12" >
+         <D value="7.13" unit="g/cm3" />
+         <composite n="4" ref="bismuth" />
+         <composite n="3" ref="germanium" />
+         <composite n="12" ref="oxygen" />
+      </material>
+
+
+     <!-- BC254 (neutron detector) -->
+     <material name="BC254" state="solid">
+        <MEE unit="eV" value="173"/>
+        <D unit="g/cm3" value="1.026"/>
+        <fraction n="0.2492" ref="carbon"/>
+        <fraction n="0.7475" ref="hydrogen"/>
+        <fraction n="0.0033" ref="B"/>
+     </material>
+
+
+
+
+    <!-- added by me -->
+    
+    <material name="FeO" state="solid">
+      <D value="5.75" unit="g/cm3"/>
+      <composite n="1" ref="iron" />
+      <composite n="1" ref="oxygen" />
+    </material>
+    
+    <element name="manganese"  formula="Mn"  Z="25">   <atom value="54.938"/>   </element>
+    
+    <material name="MnO" state="solid">
+      <D value="5.45" unit="g/cm3"/>
+      <composite n="1" ref="manganese" />
+      <composite n="1" ref="oxygen" />
+    </material>
+    
+    <material name="NaO" state="solid">
+       <D value="2.27" unit="g/cm3"/>
+       <composite n="1" ref="sodium"/>
+       <composite n="1" ref="oxygen"/>
+    </material>
+
+    <isotope name="K39"  N="39" Z="19">   <atom unit="g/mole" value="38.9637064"/>  </isotope>
+    <isotope name="K41"  N="40" Z="19">   <atom unit="g/mole" value="40.9618253"/>  </isotope>
+    <element name="potassium" formula="K">
+        <fraction n="0.933" ref="K39"/>
+        <fraction n="0.067" ref="K41"/>
+    </element>    
+
+    <material name="K2O" state="solid">
+       <D value="2.32" unit="g/cm3"/>
+       <composite n="2" ref="potassium"/>
+       <composite n="1" ref="oxygen"/>
+    </material>
+    
+    <material name="P2O5" state="solid">
+       <D value="2.39" unit="g/cm3"/>
+       <composite n="2" ref="phosphorus"/>
+       <composite n="5" ref="oxygen"/>
+    </material>
+                
+    <material name="Monzonite" state="solid">
+       <D value="2.69" unit="g/cm3"/>
+       <fraction n="0.6186" ref="SiO2"/>
+       <fraction n="0.002" ref="TiO2"/>
+       <fraction n="0.1637" ref="Al2O3"/>
+       <fraction n="0.0238" ref="Fe2O3"/>
+       <fraction n="0.0171" ref="FeO"/>
+       <fraction n="0.001" ref="MnO"/>
+       <fraction n="0.023" ref="MgO"/>
+       <fraction n="0.0485" ref="CaO"/>
+       <fraction n="0.0469" ref="NaO"/>
+       <fraction n="0.0505" ref="K2O"/>
+       <fraction n="0.0049" ref="P2O5"/>
+    </material>
+
+    <material name="Air">
+       <D value="1.290" unit="mg/cm3"/>
+       <fraction n="0.7" ref="nitrogen"/>
+       <fraction n="0.3" ref="oxygen"/>
+    </material>
+
+
+     <material name="Steel" state="solid">
+           <D value="7.86" unit="g/cm3"/>
+           <fraction n="0.01" ref="carbon"/>
+           <fraction n="0.11" ref="nickel"/>
+           <fraction n="0.18" ref="chromium"/>
+           <fraction n="0.70" ref="iron"/>
+     </material>
+
+	<material name="Tantal">
+		<D value="16.69" unit="g/cm3"/>
+		<fraction n="1." ref="tantal"/>
+	</material>
+</materials>
+
+    <solids>
+        <!--box lunit="mm" name="world_solid" x="10000.0" y="10000.0" z="10000.0" -->
+
+
+	<tube name="small_tube_endcap" rmin="0" rmax="19.78" z="6" deltaphi="360.0" startphi="0.0" lunit="mm" aunit="deg" />
+	<tube name="copper_Tube_cover" rmin="0" rmax="15" z="150" deltaphi="360.0" startphi="0.0" lunit="mm" aunit="deg" />
+	<tube name="copper_Tube" rmin="8.98" rmax="11" z="186.0" deltaphi="360.0" startphi="0.0" lunit="mm" aunit="deg" />
+	<tube name="cooling_block_wo_cut_front" rmin="0." rmax="27.06" z="22.74" deltaphi="360.0" startphi="0.0" lunit="mm" aunit="deg" />
+	<tube name="cooling_block_frontal_cut" rmin="0." rmax="22.06" z="12.74" deltaphi="360.0" startphi="0.0" lunit="mm" aunit="deg" />
+	<tube name="cooling_block_wo_cut_middle" rmin="25.06" rmax="27.06" z="56.5" deltaphi="360.0" startphi="0.0" lunit="mm" aunit="deg" />
+	<tube name="cooling_block_wo_cut_back" rmin="25.06" rmax="32.98" z="20.0" deltaphi="360.0" startphi="0.0" lunit="mm" aunit="deg" />
+	<tube name="cooling_block_cut" rmin="0." rmax="9.45" z="10.0" deltaphi="360.0" startphi="0.0" lunit="mm" aunit="deg" />
+	<cone name="targetHolderFront" rmin1="14.24" rmax1="24.0" rmin2="9.56" rmax2="24.0" z="3.21" deltaphi="360.0" startphi="0.0" lunit="mm" aunit="deg"  />	
+	<tube name="targetHolderMiddle" rmin="13.56" rmax="24.0" z="0.68" deltaphi="360.0" startphi="0.0" lunit="mm" aunit="deg" />
+	<tube name="targetHolderBack" rmin="9.45" rmax="24.0" z="2.75" deltaphi="360.0" startphi="0.0" lunit="mm" aunit="deg" />
+	<tube name="solidtarget" rmin="0." rmax="13.56" z="0.34" deltaphi="360.0" startphi="0.0" lunit="mm" aunit="deg" />
+
+	<!-- for rebuilding the y-target chamber-->
+	<tube name="solidChamberBigTube" rmin="33.05" rmax="35" z="278" deltaphi="360.0" startphi="0.0" lunit="mm" aunit="deg" />
+	<tube name="solidChamberBigTubeCut" rmin="0." rmax="33.05" z="278" deltaphi="360.0" startphi="0.0" lunit="mm" aunit="deg" />
+	<tube name="solidChamberSmallTube" rmin="20." rmax="27.43" z="118.7" deltaphi="360.0" startphi="0.0" lunit="mm" aunit="deg" />
+	<tube name="solidChamberSmallTubeCut" rmin="0." rmax="27.43" z="118.7" deltaphi="360.0" startphi="0.0" lunit="mm" aunit="deg" />
+	<tube name="solidChamberBigFlansh" rmin="33.05" rmax="47.525" z="27.75" deltaphi="360.0" startphi="0.0" lunit="mm" aunit="deg" />
+	<tube name="solidChamberSmallFlansh" rmin="20." rmax="35.06" z="16.3" deltaphi="360.0" startphi="0.0" lunit="mm" aunit="deg" />
+
+	<!-- for building the world -->
+	<tube name="big_Tube" rmin="0" rmax="35.02" z="278" deltaphi="360.0" startphi="0.0" lunit="mm" aunit="deg" />
+	<tube name="end_Flunsh" rmin="0" rmax="48.02" z="27.8" deltaphi="360.0" startphi="0.0" lunit="mm" aunit="deg" />
+	<tube name="small_Tube" rmin="0" rmax="35.1" z="135" deltaphi="360.0" startphi="0.0" lunit="mm" aunit="deg" />
+	<multiUnion name = "world_solid">
+		<multiUnionNode name="bigTube">
+			<solid ref="big_Tube" />
+			<positionref ref="YPipe"/>
+		</multiUnionNode>
+		<multiUnionNode name="endFlunsh_1">
+			<solid ref="end_Flunsh" />
+			<positionref ref="endFlunsh1"/>
+		</multiUnionNode>
+		<multiUnionNode name="endFlunsh_2">
+			<solid ref="end_Flunsh" />
+			<positionref ref="endFlunsh2"/>
+		</multiUnionNode>
+		<multiUnionNode name="smallTube">
+			<solid ref="small_Tube" />
+			<positionref ref="smalltube"/>
+			<rotationref ref="smalltubeTilt"/>
+		</multiUnionNode>
+		<!--multiUnionNode name="copperTubecover">
+			<solid ref="copper_Tube_cover" />
+			<positionref ref="coppertube"/>
+		</multiUnionNode-->
+	</multiUnion>
+
+	<subtraction name="cooling_block_front_uncut">
+		<first ref="cooling_block_wo_cut_front"/>
+		<second ref="cooling_block_frontal_cut"/>
+	</subtraction>
+
+	<subtraction name="cooling_block_front">
+		<first ref="cooling_block_front_uncut"/>
+		<second ref="cooling_block_cut"/>
+		<positionref ref="cooling_block_cut_pos"/>
+	</subtraction>
+
+	<union name="cooling_block_water">
+		<first ref="cooling_block_frontal_cut"/>
+		<second ref="cooling_block_cut"/>
+		<positionref ref="cooling_block_cut_pos"/>
+	</union>
+
+	<union name="cut_cooling_block_middle">
+		<first ref="cooling_block_front"/>
+		<second ref="cooling_block_wo_cut_middle"/>
+		<positionref ref="cooling_block_internal_pos"/>
+	</union>
+
+	<union name="cut_cooling_block">
+		<first ref="cut_cooling_block_middle"/>
+		<second ref="cooling_block_wo_cut_back"/>
+		<positionref ref="cooling_block_back_pos"/>
+	</union>
+
+	<multiUnion name="solidTargetHolder">
+		<multiUnionNode name="frontalPartTargetHolder">
+			<solid ref="targetHolderFront"/>
+			<positionref ref="innertargetHolderfront"/>
+		</multiUnionNode>
+		<multiUnionNode name="middlePartTargetHolder">
+			<solid ref="targetHolderMiddle"/>
+			<positionref ref="innertargetHoldermiddle"/>
+		</multiUnionNode>
+		<multiUnionNode name="backPartTargetHolder">
+			<solid ref="targetHolderBack"/>
+			<positionref ref="innertargetHolderback"/>
+		</multiUnionNode>
+	</multiUnion>
+
+	<!-- rebuilding the TargetCahmber -->
+ 	<subtraction name="solidChamberBigTube_smallCut">
+		<first ref= "solidChamberBigTube"/>
+		<second ref="solidChamberSmallTubeCut"/>
+		<positionref ref="smallTubePos"/>
+		<rotationref ref="smalltubeTilt"/>
+	</subtraction>
+	 <subtraction name="solidChamberSmallTube_bigCut">
+		<first ref= "solidChamberSmallTube"/>
+		<second ref="solidChamberBigTubeCut"/>
+		<positionref ref="invers_smallTubePos"/>
+		<rotationref ref="invers_smalltubeTilt"/>
+	</subtraction>
+	
+	<union name="ChamberWithoutFlanshes">
+		<first ref= "solidChamberBigTube_smallCut"/>
+		<second ref="solidChamberSmallTube_bigCut"/>
+		<positionref ref="smallTubePos"/>
+		<rotationref ref="smalltubeTilt"/>
+	</union>
+
+	<multiUnion name="solidTargetChamber">
+			<multiUnionNode name="centerPart">
+			<solid ref="ChamberWithoutFlanshes"/>
+			<positionref ref="centered"/>
+		</multiUnionNode>
+		<multiUnionNode name="addedLeftFlansh">
+			<solid ref="solidChamberBigFlansh"/>
+			<positionref ref="leftEndFlanshPos"/>
+		</multiUnionNode>
+		<multiUnionNode name="addedBothFlansh">
+			<solid ref="solidChamberBigFlansh"/>
+			<positionref ref="rightEndFlanshPos"/>
+		</multiUnionNode>
+		<multiUnionNode name="addedlastFlansh">
+			<solid ref="solidChamberSmallFlansh"/>
+			<positionref ref="smallTubeFlanshPos"/>
+			<rotationref ref="smalltubeTilt"/>
+		</multiUnionNode>
+	</multiUnion>
+
+
+    </solids>
+
+    <structure>
+		<volume name="tube_out_of_copper">
+				<solidref ref="copper_Tube"/>
+				<materialref ref="Copper"/>
+		</volume>
+
+		<volume name="small_endcap">
+			<solidref ref="small_tube_endcap"/>
+			<materialref ref="Steel"/>
+		</volume>		
+
+		<volume name="cooling_block">
+			<solidref ref="cut_cooling_block"/>
+			<materialref ref="Steel"/>
+		</volume>
+
+		<volume name="cooling_water">
+			<solidref ref="cooling_block_water"/>
+			<materialref ref="Water"/>
+		</volume>
+
+		<volume name="Targetholder">
+			<solidref ref="solidTargetHolder"/>
+			<materialref ref="Steel"/>
+		</volume>
+
+		<volume name="Target">
+			<solidref ref="solidtarget"/>
+			<materialref ref="Tantal"/>
+		</volume>
+
+		<volume name="TargetChamber">
+			<solidref ref="solidTargetChamber"/>
+			<materialref ref="Steel"/>
+		</volume>
+
+        <volume name="world_volume">
+            <materialref ref="Vacuum"/>
+	  
+            <solidref ref="world_solid"/>
+
+			<physvol>
+				<volumeref ref = "tube_out_of_copper"/>
+				<positionref ref= "tube_copper"/> 
+			</physvol>
+
+            <!--physvol>
+                <file name="gdml/y-Target/ES_i4762-m3x20-a2_dec.gdml"/>
+				<positionref ref="Targetholder"/>
+				<rotationref ref="RotateY180"/>
+
+             </physvol>
+            <physvol>
+                <file name="gdml/y-Target/ES_kt1_gewring_dec.gdml"/>
+		<positionref ref="CopperPipe" />
+
+             </physvol-->
+
+			<physvol>
+				<volumeref ref="Targetholder"/>
+				<positionref ref="selfTargetholder"/>
+			</physvol>		
+
+            <!--physvol>
+                <file name="gdml/y-Target/ES_y_stueck_dec.gdml"/>
+				<positionref ref="YPipe" />
+				<rotationref ref="RotateYPipe"/>
+             </physvol-->
+			<physvol>
+				<volumeref ref="TargetChamber"/>
+				<positionref ref="YPipe"/>
+			</physvol>	
+            <!--physvol>
+                <file name="gdml/y-Target/CU_druckri_dec.gdml"/>
+		<positionref ref="CopperPipe" />
+
+             </physvol>
+
+            <physvol>
+                <file name="gdml/y-Target/CU_kt1_traegst_dec.gdml"/>
+		<positionref ref="CopperPipe" />
+
+             </physvol-->
+
+			<physvol>
+				<volumeref ref="small_endcap"/>
+				<positionref ref="small_Tube_endcap"/>
+				<rotationref ref="smallEndcapTilt"/>
+			</physvol>
+
+			<physvol>
+				<volumeref ref="cooling_block"/>
+				<positionref ref="cooling_block_position"/>
+			</physvol>
+			
+			<physvol>
+				<volumeref ref="cooling_water"/>
+				<positionref ref="cooling_water_pos"/>
+			</physvol>			
+			
+			<physvol>
+				<volumeref ref="Target"/>
+				<positionref ref="Targetpos"/>
+			</physvol>	
+        </volume>
+    </structure>
+
+    <setup name="Default" version="1.0">
+        <world ref="world_volume"/>
+    </setup>
+</gdml>

@@ -1,0 +1,4 @@
+########################################
+#
+/myDetector/event/printModulo 1000000
+/run/beamOn 500000000

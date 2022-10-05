@@ -1,0 +1,190 @@
+//mandatory PrimaryGeneratorAction Class
+
+#include "myPrimaryGeneratorAction.hh"
+#include "myDetectorConstruction.hh"
+
+#include "G4GenericMessenger.hh"
+#include "G4Event.hh"
+#include "G4GeneralParticleSource.hh"
+#include "G4ParticleTable.hh"
+#include "G4ParticleDefinition.hh"
+#include "G4ParticleGun.hh"
+#include "G4UnitsTable.hh"
+#include "G4SystemOfUnits.hh"
+#include "G4PhysicalConstants.hh"
+#include "Randomize.hh"
+
+#include <ctime>
+#include <cmath>
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+myPrimaryGeneratorAction::myPrimaryGeneratorAction(myDetectorConstruction* myDC, G4double _particleEnergy = 9.8419*MeV)
+:myDetectorConst(myDC),
+ particleEnergy(_particleEnergy)
+{
+	cascadeOption = 0; //implemented for 12C(a,g) in an earlier version without doppler shift, needs to be adjusted for this one
+					   //for calibration sources RadioactiveDecay takes care of it
+	source = false; //true: particle created with G4RadioactiveDecay, false: particles with adjustable angular dependency and energy
+	G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
+	G4ParticleDefinition* particle = particleTable->FindParticle("gamma");		//"gamma" "proton" "mu-" "e-"
+	//G4ParticleDefinition* particle = particleTable->FindParticle("geantino");		//"gamma" "proton" "mu-" "e-"
+	particleName = particle->GetParticleName();
+	
+	if(source == true)
+		generalParticleSource = new G4GeneralParticleSource();
+	
+	if (source == false) {
+		particleGun = new G4ParticleGun();
+		particleGun->SetParticleDefinition(particle);
+		particleGun->SetParticlePosition(G4ThreeVector(0.,0.,0.));
+	}
+		
+	//Messenger commands
+	DefineCommands();
+
+	//inform the runManager to save random number seed
+	//~ G4RunManager::GetRunManager()->SetRandomNumberStore(true);
+    // get random engine and set seed from system time
+	myRandomEngine = CLHEP::HepRandom::getTheEngine();
+
+}
+
+myPrimaryGeneratorAction::~myPrimaryGeneratorAction()
+{
+	delete particleGun;
+	delete fMessenger;
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+G4ThreeVector myPrimaryGeneratorAction::ParticleMomentumDirection()
+{
+	//phi -> theta and theta -> phi, because z-axis is not upwards
+	G4bool foundAngle = false;
+	Theta;
+	//E2 angular distribution
+	//~ while (!foundAngle) {
+		Theta = myRandomEngine->flat() * twopi;
+		//~ G4double rnd = myRandomEngine->flat();
+		//~ G4double angdist = (1. + 5./7. * 1./2. * (3.*pow(cos(Theta),2) - 1) - 12./7. * 1./8. * (35.*pow(cos(Theta),4) - 30.*pow(cos(Theta),2) + 3))/1.875;
+		//~ if (rnd < angdist)
+			//~ foundAngle = true;
+		//G4cout << foundAngle << " " << Theta << " " << rnd << " " << angdist << G4endl;	
+	//~ }
+	Phi = myRandomEngine->flat() * pi - pi/2.;
+	cosAlpha = std::cos(Theta);
+	
+	G4ThreeVector v;//(std::sin(Theta)*std::cos(Phi), std::sin(Theta)*std::sin(Phi), std::cos(Theta));
+	v.setRThetaPhi(1.,Theta,Phi);
+	return v;
+}
+
+G4double myPrimaryGeneratorAction::CalculateParticleEnergy(G4double particleE)
+{
+	G4double EtargetThickness = 12.*keV; //not yet implemented
+	G4double mBeam = 4.00260325413; //in u
+	G4double mTarget = 3.01602932265; //in u
+	G4double mBound = 7.01692872; //mass of compound nucleus in u
+	G4double Ebeam = (particleEnergy - Qvalue) * (mTarget + mBeam) / mTarget; //beam energy in laboratory system
+	G4double modifiedParticleEnergy;
+	if (Ebeam > 0) {
+		G4double impulseBeam = sqrt(2 * mBeam * 931.5 * Ebeam);
+		G4double vBeam = impulseBeam / (mBound * 931.5*MeV); //velocity of beam in units of c
+		G4double Edoppler = vBeam * particleEnergy * cosAlpha;
+		G4double Erecoil = pow(particleE, 2.) / (2. * mBound * 931.5*MeV);
+		modifiedParticleEnergy = particleE - Erecoil + Edoppler; //recoil energy, target thickness for gas target, doppler shift
+		//G4cout << particleE << " " << vBeam << " " << Edoppler << " " << particleEnergy << " " << cosAlpha << " " << Erecoil << G4endl;
+	} 
+	else {
+		modifiedParticleEnergy = particleE;
+	}
+	return modifiedParticleEnergy;
+}
+
+void myPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
+{ 
+	G4int event_id = anEvent->GetEventID();	
+	if (event_id == 0) 	G4cout << "Generating primary particles..." << G4endl;
+	
+	G4double levelE;
+	Qvalue =  1.58713*MeV;
+	if (source == true) {
+		generalParticleSource->GeneratePrimaryVertex(anEvent);
+	}
+	if (source == false) { //doppler shift for simulations with beam
+		particleGun->SetParticleMomentumDirection(ParticleMomentumDirection());
+		modifiedEnergy = CalculateParticleEnergy(particleEnergy);
+		particleGun->SetParticleEnergy(modifiedEnergy);
+		//~ particleGun->SetParticleEnergy(particleEnergy);
+		particleGun->GeneratePrimaryVertex(anEvent);
+	}
+	/*	
+	if (cascadeOption == 0) {
+		//primary gamma, no cascade
+		//particleGun->SetParticleMomentumDirection(ParticleMomentumDirection()); done in macro
+		particleGun->SetParticleEnergy(CalculateParticleEnergy(particleEnergy));
+		if (event_id == 0) G4cout << "Energy of primary "<< particleName << " is " << G4BestUnit(CalculateParticleEnergy(particleEnergy), "Energy") <<  G4endl;
+		//create vertex
+		particleGun->GeneratePrimaryVertex(anEvent);
+	}
+	if (cascadeOption == 1) {
+		//cascade with 7.1169 MeV
+		levelE = 7.1169*MeV;
+		particleGun->SetParticleMomentumDirection(ParticleMomentumDirection());
+		particleGun->SetParticleEnergy(CalculateParticleEnergy(particleEnergy-levelE));
+		if (event_id == 0) G4cout << "Energy of first "<< particleName << " is " << G4BestUnit(CalculateParticleEnergy(particleEnergy-levelE), "Energy") <<  G4endl;
+		//create vertex
+		particleGun->GeneratePrimaryVertex(anEvent);
+		
+		//second gamma
+		particleGun->SetParticleMomentumDirection(ParticleMomentumDirection());
+		particleGun->SetParticleEnergy(CalculateParticleEnergy(levelE));
+		if (event_id == 0) G4cout << "Energy of second "<< particleName << " is " << G4BestUnit(CalculateParticleEnergy(levelE), "Energy") <<  G4endl;
+		//create vertex
+		particleGun->GeneratePrimaryVertex(anEvent);
+	}	
+	if (cascadeOption == 2) {
+		//cascade with 6.9171 MeV
+		levelE = 6.9171*MeV;
+		particleGun->SetParticleMomentumDirection(ParticleMomentumDirection());
+		particleGun->SetParticleEnergy(CalculateParticleEnergy(particleEnergy-levelE));
+		if (event_id == 0) G4cout << "Energy of primary "<< particleName << " is " << G4BestUnit(CalculateParticleEnergy(particleEnergy-levelE), "Energy") <<  G4endl;
+		//create vertex
+		particleGun->GeneratePrimaryVertex(anEvent);
+		
+		//second gamma
+		particleGun->SetParticleMomentumDirection(ParticleMomentumDirection());
+		particleGun->SetParticleEnergy(CalculateParticleEnergy(levelE));
+		if (event_id == 0) G4cout << "Energy of second "<< particleName << " is " << G4BestUnit(CalculateParticleEnergy(levelE), "Energy") <<  G4endl;
+		//create vertex
+		particleGun->GeneratePrimaryVertex(anEvent);		
+	}		*/
+}
+
+void myPrimaryGeneratorAction::SetEnergy(G4double energy) {
+	particleEnergy = energy;
+	//particleGun->SetParticleEnergy(particleEnergy);
+	G4cout << "\n New particle-energy "<< G4BestUnit(energy, "Energy") << " is saved!" << G4endl;
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+
+void myPrimaryGeneratorAction::DefineCommands()
+{
+//  Define /myDetector/event/ command directory using generic messenger class
+	fMessenger = new G4GenericMessenger(this, "/myDetector/gun/", "PrimaryGenerator control");
+
+//  print modulo command
+	auto& printCmd = fMessenger->DeclareProperty("printModulo", printModulo, "Print primary modulo n.");
+	printCmd.SetParameterName("PrimaryNb",false);
+	printCmd.SetRange("PrimaryNb>0");
+	printCmd.SetDefaultValue("100.");
+	
+//  primary energy command
+	auto& energyCmd = fMessenger->DeclareMethodWithUnit("energy", "GeV", &myPrimaryGeneratorAction::SetEnergy, "Sets energy of the incident particle.");
+	energyCmd.SetParameterName("energy",false);
+	energyCmd.SetRange("energy>=0.0");
+	energyCmd.SetDefaultValue("30.");
+}
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......

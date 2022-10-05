@@ -1,0 +1,15 @@
+########################################
+#
+/myDetector/event/printModulo 1000000
+/gps/number 1
+/gps/pos/type Point
+/gps/ang/type iso
+/gps/ene/type Mono
+
+/gps/ene/mono 10.067 MeV
+
+#/grdm/noVolumes
+#/grdm/selectVolume Source_Disk
+
+/gps/particle gamma
+/run/beamOn 5000000
